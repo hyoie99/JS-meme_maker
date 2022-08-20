@@ -3,12 +3,13 @@ const context = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 800;
 
-// context.rect(50, 50, 100, 100);
-context.moveTo(50, 50);
-context.lineTo(150, 50);
-context.lineTo(150, 150);
-context.lineTo(50, 150);
-context.lineTo(50, 50);
-// context.fill();
-context.stroke();
-// context.fill();
+context.fillRect(200, 200, 50, 200);
+context.fillRect(400, 200, 50, 200);
+context.lineWidth = 3;
+context.strokeRect(300, 300, 50, 100);
+context.fillRect(200, 200, 200, 20);
+
+context.moveTo(200, 200);
+context.lineTo(325, 100);
+context.lineTo(450, 200);
+context.fill();
