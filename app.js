@@ -4,6 +4,7 @@ const color = document.getElementById("color");
 const modeBtn = document.getElementById("mode-btn");
 const destroyBtn = document.getElementById("destroy-btn");
 const eraseBtn = document.getElementById("eraser-btn");
+const file = document.getElementById("file");
 const canvas = document.querySelector("canvas");
 const lineWidth = document.getElementById("line-width");
 const context = canvas.getContext("2d");
@@ -76,6 +77,18 @@ function onClickEraser() {
   modeBtn.innerText = "Fill";
 }
 
+function onFileChange(event) {
+  const file = event.target.files[0];
+  // 가상의 이미지 url 만들기, 브라우저를 위한 것
+  const url = URL.createObjectURL(file);
+  const image = new Image();
+  image.src = url;
+  image.onload = function () {
+    context.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    file.value = null;
+  };
+}
+
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
@@ -89,3 +102,4 @@ colorOption.forEach((color) => color.addEventListener("click", onColorClick));
 modeBtn.addEventListener("click", onChangeMode);
 destroyBtn.addEventListener("click", onClickDestroy);
 eraseBtn.addEventListener("click", onClickEraser);
+file.addEventListener("change", onFileChange);
