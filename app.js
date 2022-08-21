@@ -1,15 +1,22 @@
 // HTMLcollection 요소를 배열로 만들기
 const colorOption = Array.from(document.getElementsByClassName("color-option"));
 const color = document.getElementById("color");
+const modeBtn = document.getElementById("mode-btn");
+const destroyBtn = document.getElementById("destroy-btn");
+const eraseBtn = document.getElementById("eraser-btn");
 const canvas = document.querySelector("canvas");
 const lineWidth = document.getElementById("line-width");
 const context = canvas.getContext("2d");
-canvas.width = 800;
-canvas.height = 800;
+
+const CANVAS_WIDTH = 800;
+const CANVAS_HEIGHT = 800;
+canvas.width = CANVAS_WIDTH;
+canvas.height = CANVAS_HEIGHT;
 
 context.lineWidth = lineWidth.value;
 
 let isPainting = false;
+let isFilling = false;
 
 function onMove(event) {
   if (isPainting) {
@@ -27,6 +34,11 @@ function startPainting() {
 function cancelPainting() {
   isPainting = false;
 }
+function onCanvasClick() {
+  if (isFilling) {
+    context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  }
+}
 
 function onLineWidthChange(event) {
   context.lineWidth = event.target.value;
@@ -37,24 +49,43 @@ function changeBrushColor(select) {
   context.fillStyle = select;
 }
 function onColorChange(event) {
-  // context.strokeStyle = event.target.value;
-  // context.fillStyle = event.target.value;
   changeBrushColor(event.target.value);
 }
 function onColorClick(event) {
   const colorValue = event.target.dataset.color;
-  // context.strokeStyle = colorValue;
-  // context.fillStyle = colorValue;
   changeBrushColor(colorValue);
   color.value = colorValue;
+}
+
+function onChangeMode() {
+  if (isFilling) {
+    isFilling = false;
+    modeBtn.innerText = "Fill";
+  } else {
+    isFilling = true;
+    modeBtn.innerText = "Draw";
+  }
+}
+function onClickDestroy() {
+  context.fillStyle = "white";
+  context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+}
+function onClickEraser() {
+  context.strokeStyle = "white";
+  isFilling = false;
+  modeBtn.innerText = "Fill";
 }
 
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
 canvas.addEventListener("mouseleave", cancelPainting);
+canvas.addEventListener("click", onCanvasClick);
 
 lineWidth.addEventListener("change", onLineWidthChange);
 color.addEventListener("change", onColorChange);
 
 colorOption.forEach((color) => color.addEventListener("click", onColorClick));
+modeBtn.addEventListener("click", onChangeMode);
+destroyBtn.addEventListener("click", onClickDestroy);
+eraseBtn.addEventListener("click", onClickEraser);
