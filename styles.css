@@ -1,17 +1,81 @@
+@import "reset.css";
+
 body {
+  /* width: 100vw;
+  height: 100vh; */
   display: flex;
-  justify-content: center;
-  align-items: center;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: gainsboro;
+  padding: 20px;
 }
 
 canvas {
   width: 800px;
   height: 800px;
   border: 3px dotted #000;
+  background-color: white;
+  border-radius: 10px;
 }
 
+.btns {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.color-options {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
 .color-option {
   width: 50px;
   height: 50px;
+  border-radius: 50%;
   cursor: pointer;
+  border: 5px solid white;
+  transition: transform ease-in-out 0.2s;
+}
+.color-option:hover {
+  transform: scale(1.2);
+}
+
+input#color {
+  padding: 0;
+  border: 1px solid white;
+  width: 60px;
+  /* height: 25px; */
+}
+
+button,
+label {
+  all: unset;
+  padding: 8px;
+  text-align: center;
+  background-color: rgb(46, 119, 255);
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: opcacity linear 0.3s;
+  width: 300px;
+}
+button:hover {
+  opacity: 0.85;
+}
+
+input#text {
+  all: unset;
+  padding: 10px 53px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: white;
+}
+input#file {
+  display: none;
 }
